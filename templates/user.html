@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h1>{{ user.user }}{{ title }}</h1>
+		{% if user.realname or user.location %}
+			<p>
+				{% if user.realname %}<span>真实姓名&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ user.realname }}<br>{% endif %}
+				{% if user.location %}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;住&nbsp;&nbsp;址&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ user.location }}<br>{% endif %}
+				{% if user.about_me %}<span>个人简介&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ user.about_me }}<br>{% endif %}
+			</p>
+		{% endif %}
+		<p>注册时间&nbsp;&nbsp;&nbsp;&nbsp;{{ user.user.date_joined|date:"Y-m-d H:i:s" }}. <br>上次登录&nbsp;&nbsp;&nbsp;&nbsp;{{ user.user.last_login|date:"Y-m-d H:i:s" }}.</p>
+
+		<p>发表过<span class="label label-success label-as-badge">{{ posts|length }}</span>篇微博.</p>
+
+		<p>
+			{% if user.user != current_user.user %}
+				{% if not f %}
+					<a href="/follow/{{ user.user }}"><span class="btn btn-primary">关注他</span>&nbsp;</a>
+				{% else %}
+					<a href="/unfollow/{{ user.user }}"><span class="btn btn-primary">取消关注</span>&nbsp;</a>
+				{% endif %}
+			{% endif %}
+			<a href="/followed-by/{{ user.user.username }}">关注:&nbsp;<span class="label label-default label-as-badge">{{ user.followers.count }}</span>&nbsp;</a>
+			<a href="/followers/{{ user.user.username }}">粉丝:&nbsp;<span class="label label-default label-as-badge">{{ user.followed.count }}</span>&nbsp;</a>
+		</p>
+
+		{% if user.user == current_user.user %}
+			<a class="btn btn-default" style="font-size: 16px" href="/edit_profile/">编辑资料</a>
+		{% endif %}
+
+	</div>
+
+	<h3>{{ user.user }}的微博</h3>
+	{% include '_posts.html' %}
+
+{% endblock %}

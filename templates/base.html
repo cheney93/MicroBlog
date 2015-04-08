@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MircoBlog</title>
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/non-responsive.css" rel="stylesheet">
+  	<link href="/static/css/styles.css" rel="stylesheet">
+	{% block css %}{% endblock %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">MircoBlog</a>
+        </div>
+        <div id="navbar">
+		  <ul class="nav navbar-nav navbar-left">
+			  <li><a href="/">首页</a></li>
+			  {% if current_user.user.is_authenticated %}
+			  <li><a href="/user/{{ current_user.user }}">{{ current_user.user }}</a></li>
+			  {% endif %}
+		  </ul>
+          <ul class="nav navbar-nav navbar-right">
+			  {% if current_user.user.is_authenticated %}
+				  <li class="dropdown ">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">设置&nbsp;<span class="caret"></span></a>
+				  <ul class="dropdown-menu  dropdown-menu-left" role="menu">
+					<li><a href="#">修改密码</a></li>
+					<li class="divider"></li>
+					<li><a href="/account/logout">注销</a></li>
+				  </ul>
+			  {% else %}
+				  <li><a href="/account/login">登录</a></li>
+			  {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+		{% if messages %}
+			{% for message in messages %}
+				<div class="alert alert-info">
+					<strong>{{ message }}</strong>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		{% block content %}{% endblock %}
+
+    </div> <!-- /container -->
+
+    <script src="/static/js/jquery-1.11.2.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.js"></script>
+  	{% block js %}{% endblock %}
+  </body>
+</html>

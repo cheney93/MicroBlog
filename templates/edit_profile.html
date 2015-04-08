@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>编辑你的资料</h1>
+</div>
+<div class="col-md-4">
+    <form action="/edit_profile/" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+			<label class="control-label" for="realname">真实姓名</label>
+			<input type="text" class="form-control" style="width: 300px" id="realname" name="realname">
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="location">住址</label>
+			<input type="text" class="form-control" style="width: 300px" id="location" name="location">
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="about_me">个人简介</label>
+			<textarea class="form-control" style="width: 300px;resize: none;" id="about_me" name="about_me"></textarea>
+		</div>
+		<input type="submit" class="btn btn-default" value="提交">
+	</form>
+</div>
+{% endblock %}

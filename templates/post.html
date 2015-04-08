@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load pagination_tags %}
+
+{% block content %}
+
+<ul class="posts">
+	<li class="post">
+		<div class="post-content">
+			<div class="post-date">{{ post.timestamp|date:"Y-m-d H:i:s" }}</div>
+			<div class="post-author"><a href="/user/{{ post.author_id.username }}">{{ post.author_id.username }}</a></div>
+			<div class="post-body">{{ post.body }}</div>
+		</div>
+	</li>
+</ul>
+
+	<h4 id="comments">评论列表</h4>
+	<div class="comment-form">
+		<form method="post" class="form" role="form">
+			{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="body">写下你的评论</label>
+				<input class="form-control" style="width: 500px" id="body" name="body" type="text" value="" required>
+			</div>
+			<input class="btn btn-default" id="submit" name="submit" type="submit" value="评论">
+		</form>
+	</div>
+
+{% include '_comments.html' %}
+
+{% endblock %}

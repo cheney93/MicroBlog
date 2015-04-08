@@ -1,0 +1,22 @@
+{% load pagination_tags %}
+<ul class="posts">
+{% autopaginate posts %}
+	{% for post in posts %}
+		<li class="post">
+			<div class="post-content">
+				<div class="post-date">{{ post.timestamp|date:"Y-m-d H:i:s" }}</div>
+				<div class="post-author"><a href="/user/{{ post.author_id.username }}">{{ post.author_id.username }}</a></div>
+				<div class="post-body">{{ post.body }}</div>
+			</div>
+			<div class="post-footer">
+				<a href="/post/{{ post.id }}" class="label label-default">
+					<span>详情</span>
+				</a>&nbsp;
+				<a href="/post/{{ post.id }}" class="label label-primary">
+					<span>评论({{ post.comment_set.count }})</span>
+				</a>
+			</div>
+		</li>
+	{% endfor %}
+{% paginate %}
+</ul>

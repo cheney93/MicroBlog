@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="page-header">
+		<h1>登录</h1>
+	</div>
+	<form action="/account/login/" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<label class="control-label" for="username">用户名</label>
+			<input type="text" class="form-control" style="width: 300px" id="username" name="username">
+		</div>
+		<div class="form-group">
+			<label class="control-label" for="password">密码</label>
+			<input type="password" class="form-control" style="width: 300px" id="password" name="password">
+		</div>
+		{% if loginStatus %}
+			<div class="alert alert-warning" style="width: 300px;">
+				<strong>{{ loginStatus }}</strong>
+			</div>
+		{% endif %}
+		<p>还没有账号?&nbsp;<a href="/account/register">立即注册</a></p>
+		<input class="btn btn-default" type="submit" value="登录">
+	</form>
+{% endblock %}

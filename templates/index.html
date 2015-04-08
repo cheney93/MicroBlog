@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="page-header">
+		<h1>你好,{% if current_user.user.is_authenticated %}{{ current_user.user }}!{% else %}你还没有登录!点击<a href="/account/login">此处</a>立即登录.{% endif %}</h1>
+	</div>
+	{% if current_user.user.is_authenticated %}
+		<form action="." method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="body">有什么新鲜事想告诉大家?</label>
+				<textarea class="form-control" style="width: 940px;height: 70px;resize: none;" id="body" name="body" required></textarea>
+			</div>
+			<input type="submit" class="btn btn-default" style="" value="发布">
+		</form>
+
+		<div class="post-tabs">
+			<ul class="nav nav-tabs">
+				<li{% if not show_followed %} class="active"{% endif %}><a href="/show-all">所有</a></li>
+				<li{% if show_followed %} class="active"{% endif %}><a href="/show-followed">我关注的</a></li>
+			</ul>
+		</div>
+		{% include '_posts.html' %}
+
+	{% endif %}
+{% endblock %}
