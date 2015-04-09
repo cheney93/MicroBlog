@@ -42,10 +42,10 @@ class UserProfile(models.Model):
 class Post(models.Model):
 	body = models.TextField()
 	timestamp = models.DateTimeField(db_index=True, auto_now_add=True)
-	author = models.ForeignKey(User, related_name='author')
+	author = models.ForeignKey(User, related_name='posts')
 
 	def __unicode__(self):
-		return self.author
+		return self.author.username
 
 
 class Follows(models.Model):
@@ -64,7 +64,7 @@ class Comment(models.Model):
 	body = models.TextField()
 	timestamp = models.DateTimeField(db_index=True, auto_now_add=True)
 	author = models.ForeignKey(User)
-	post = models.ForeignKey(Post)
+	post = models.ForeignKey(Post, related_name='comments')
 
 	def __unicode__(self):
 		return self.author.username

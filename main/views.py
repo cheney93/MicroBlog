@@ -84,10 +84,9 @@ def post(request, postid):
 		messages.success(request, '成功发表评论!')
 		return HttpResponseRedirect('/post/%s' % postid)
 	comments = []
-	commentObj = post.comment_set.order_by('timestamp')
+	commentObj = post.comments.order_by('timestamp')
 	for i in commentObj:
 		comments.append(i)
-	post.comment_set.count()
 	return render_to_response(
 		'post.html',
 		{'post': post, 'comments': comments},
