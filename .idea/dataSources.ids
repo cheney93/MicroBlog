@@ -48,8 +48,6 @@
       <exported-key name="#FAKE_auth_user_groups_2" table="auth_user_groups" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_auth_user_user_permissions_2" table="auth_user_user_permissions" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_django_admin_log_1" table="django_admin_log" schema="" catalog="" columns="user_id"/>
-      <exported-key name="#FAKE_main_comment_1" table="main_comment" schema="" catalog="" columns="author_id"/>
-      <exported-key name="#FAKE_main_post_1" table="main_post" schema="" catalog="" columns="author_id"/>
       <exported-key name="#FAKE_main_userprofile_1" table="main_userprofile" schema="" catalog="" columns="user_id"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="" type="TABLE">
@@ -112,16 +110,16 @@
     </table>
     <table name="main_comment" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="post_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="author_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <column name="body" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="timestamp" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
-      <column name="author_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="post_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
-      <foreign-key name="#FAKE_main_comment_1" columns="author_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_main_comment_2" columns="post_id" ref-table="main_post" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <index name="main_comment_4f331e2f" unique="true" columns="author_id"/>
-      <index name="main_comment_d7e6d55b" unique="true" columns="timestamp"/>
+      <foreign-key name="#FAKE_main_comment_1" columns="post_id" ref-table="main_post" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_main_comment_2" columns="author_id" ref-table="main_userprofile" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="main_comment_f3aa1999" unique="true" columns="post_id"/>
+      <index name="main_comment_d7e6d55b" unique="true" columns="timestamp"/>
+      <index name="main_comment_4f331e2f" unique="true" columns="author_id"/>
     </table>
     <table name="main_follows" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
@@ -140,8 +138,8 @@
       <column name="timestamp" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <column name="author_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
-      <foreign-key name="#FAKE_main_post_1" columns="author_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <exported-key name="#FAKE_main_comment_2" table="main_comment" schema="" catalog="" columns="post_id"/>
+      <foreign-key name="#FAKE_main_post_1" columns="author_id" ref-table="main_userprofile" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_main_comment_1" table="main_comment" schema="" catalog="" columns="post_id"/>
       <index name="main_post_4f331e2f" unique="true" columns="author_id"/>
       <index name="main_post_d7e6d55b" unique="true" columns="timestamp"/>
     </table>
@@ -153,8 +151,10 @@
       <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_main_userprofile_1" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_main_comment_2" table="main_comment" schema="" catalog="" columns="author_id"/>
       <exported-key name="#FAKE_main_follows_1" table="main_follows" schema="" catalog="" columns="follower_id"/>
       <exported-key name="#FAKE_main_follows_2" table="main_follows" schema="" catalog="" columns="followed_id"/>
+      <exported-key name="#FAKE_main_post_1" table="main_post" schema="" catalog="" columns="author_id"/>
     </table>
     <table name="sqlite_sequence" schema="" catalog="" type="TABLE">
       <column name="name" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>

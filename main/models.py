@@ -28,24 +28,16 @@ class UserProfile(models.Model):
 		return bool(self.followers.filter(followed_id=user.id))
 
 	def followed_posts(self):
-		l1 = []
-		l2 = []
-		f = self.followers.all()
-		for i in f:
-			l1.append(i.followed.id)
-		posts = Post.objects.filter(author__in=l1).order_by('-timestamp')
-		for i in posts:
-			l2.append(i)
-		return l2
+		return Post.objects.select_related().filter(author=self.followers.all()).order_by('-timestamp')
 
 
 class Post(models.Model):
 	body = models.TextField()
 	timestamp = models.DateTimeField(db_index=True, auto_now_add=True)
-	author = models.ForeignKey(User, related_name='posts')
+	author = models.ForeignKey(UserProfile, related_name='posts')
 
 	def __unicode__(self):
-		return self.author.username
+		return self.author.user.username
 
 
 class Follows(models.Model):
@@ -54,7 +46,7 @@ class Follows(models.Model):
 	timestamp = models.DateTimeField(auto_now=True)
 
 	def __unicode__(self):
-		return self.follower.user.username
+		return self.followed.user.username
 
 	class Meta:
 		unique_together = (("follower", "followed"),)
@@ -63,7 +55,7 @@ class Follows(models.Model):
 class Comment(models.Model):
 	body = models.TextField()
 	timestamp = models.DateTimeField(db_index=True, auto_now_add=True)
-	author = models.ForeignKey(User)
+	author = models.ForeignKey(UserProfile, related_name='comments')
 	post = models.ForeignKey(Post, related_name='comments')
 
 	def __unicode__(self):

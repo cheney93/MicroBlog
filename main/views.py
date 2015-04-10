@@ -17,24 +17,17 @@ def index(request):
 		p.body = body
 		p.save()
 		return HttpResponseRedirect('/')
-	postsObj = []
-	posts = Post.objects.order_by('-timestamp')
-	for i in posts:
-		postsObj.append(i)
-	show_cookie = False
+	show_followed = False
 	if str(request.user) != 'AnonymousUser':
 		u = UserProfile.objects.get(user__username=request.user)
 		show_cookie = bool(request.COOKIES.get('show_followed', ''))
 		if show_cookie:
 			posts = u.followed_posts()
-	if not show_cookie:
-		posts = []
-		postsObj = Post.objects.order_by('-timestamp')
-		for i in postsObj:
-			posts.append(i)
+		else:
+			posts = Post.objects.order_by('-timestamp')
 	return render_to_response(
 		'index.html',
-		{'posts': posts, 'show_followed': show_cookie},
+		locals(),
 		context_instance=RequestContext(request))
 
 

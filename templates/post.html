@@ -7,7 +7,7 @@
 	<li class="post">
 		<div class="post-content">
 			<div class="post-date">{{ post.timestamp|date:"Y-m-d H:i:s" }}</div>
-			<div class="post-author"><a href="/user/{{ post.author_id.username }}">{{ post.author_id.username }}</a></div>
+			<div class="post-author"><a href="/user/{{ post.author.user.username }}">{{ post.author.user.username }}</a></div>
 			<div class="post-body">{{ post.body }}</div>
 		</div>
 	</li>
